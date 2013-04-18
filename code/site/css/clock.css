@@ -1,15 +1,32 @@
 .Clock {
+  position: absolute;
 
+  background-color: white;
+
+  border-radius: 50%;
+  border: 5px solid black;
+  box-sizing: border-box;
+
+  overflow: hidden;
 }
 
-.Clock .NightBg {
+.Clock .Night {
+  position: absolute;
+  width: 100%;
+  height: 50%;
 
-}
+  background-color: lightgray;
 
-.Clock .NightLabel {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
 
+  transform-origin: bottom;
+  transform: rotate(-97deg);
 }
 
 .Clock .Number {
-  
+
 }

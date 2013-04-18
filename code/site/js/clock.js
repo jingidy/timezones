@@ -14,7 +14,20 @@ var Clock = (function () {
       fixme('Implement setTime');
     };
 
-    fixme('Implement Clock constructor');
+    el = $('<div>').addClass('Clock');
+    el.css({
+      'width': diameter + 'px',
+      'height': diameter + 'px'
+    });
+
+    // Add the PM shadow
+    var night = $('<div>').addClass('Night');
+    night.css('line-height', diameter - 40 + 'px');
+    night.append('PM');
+    el.append(night);
+
+    fixme('Generate numbers for clock face');
+
     return this;
   }
 

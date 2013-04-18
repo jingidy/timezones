@@ -11,7 +11,7 @@ $(function () {
 
     fixme('place clocks at center');
 
-    $('body').append(clock);
+    $('body').append(clock.el());
     clocks[i] = clock;
   }
 });
