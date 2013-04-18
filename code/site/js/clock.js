@@ -14,6 +14,7 @@ var Clock = (function () {
       fixme('Implement setTime');
     };
 
+    // Initialization
     el = $('<div>').addClass('Clock');
     el.css({
       'width': diameter + 'px',
@@ -26,7 +27,13 @@ var Clock = (function () {
     night.append('PM');
     el.append(night);
 
-    fixme('Generate numbers for clock face');
+    for (var i = 0; i < 24; i++) {
+      var val = i > 12 ? i - 12 : i;
+      var number = new Number (val);
+      number.rotate(360 / 24 * i);
+      el.append(number.el());
+      numbers[i] = number;
+    }
 
     return this;
   }
@@ -35,11 +42,22 @@ var Clock = (function () {
 
     // Private
     var el = null;
+    var textEl = null;
+    var rotation = 0;
 
     // Public
     this.el = function () { return el; };
 
-    fixme('Implement Number constructor');
+    this.rotate = function (deg) {
+      el.css('transform', 'rotate(' + deg + 'deg)');
+      textEl.css('transform', 'rotate(' + -deg + 'deg)');
+    };
+
+    // Initialization
+    el = $('<div>').addClass('Number');
+    textEl = $('<div>').addClass('NumberText').append(val);
+    el.append(textEl);
+
     return this;
   }
 
