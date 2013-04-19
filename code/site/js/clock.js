@@ -4,14 +4,29 @@ var Clock = (function () {
     // Private
     var el = null;
     var numbers = [];
+    var night = null;
     var timezonePicker = new TimezonePicker ();
+
+    function rotateNumbersWithOffset (offsetDeg) {
+      var numbersCount = numbers.length;
+      for (var i = 0; i < numbersCount; i++)
+        numbers[i].rotate(360 / numbersCount * i + offsetDeg);
+    }
+
+    function updateNightShadowRotation () {
+      var noonRotation = numbers[12].getRotation();
+      night.css('transform', 'rotate(' + (noonRotation + 83) + 'deg)');
+    }
 
     // Public
     this.el = function () { return el; };
     this.timezonePicker = function () { return timezonePicker; };
 
     this.setTime = function (hours, minutes) {
-      fixme('Implement setTime');
+      var fraction = (hours + minutes / 60) / numbers.length;
+      var rotation = -fraction * 360;
+      rotateNumbersWithOffset(rotation);
+      updateNightShadowRotation();
     };
 
     // Initialization
@@ -21,19 +36,20 @@ var Clock = (function () {
       'height': diameter + 'px'
     });
 
-    // Add the PM shadow
-    var night = $('<div>').addClass('Night');
-    night.css('line-height', diameter - 40 + 'px');
-    night.append('PM');
-    el.append(night);
-
     for (var i = 0; i < 24; i++) {
       var val = i > 12 ? i - 12 : i;
       var number = new Number (val);
-      number.rotate(360 / 24 * i);
       el.append(number.el());
       numbers[i] = number;
     }
+    rotateNumbersWithOffset(0);
+
+    // Add the PM shadow
+    night = $('<div>').addClass('Night');
+    night.css('line-height', diameter - 40 + 'px');
+    night.append('PM');
+    updateNightShadowRotation();
+    el.append(night);
 
     return this;
   }
@@ -47,10 +63,12 @@ var Clock = (function () {
 
     // Public
     this.el = function () { return el; };
+    this.getRotation = function () { return rotation; };
 
     this.rotate = function (deg) {
       el.css('transform', 'rotate(' + deg + 'deg)');
       textEl.css('transform', 'rotate(' + -deg + 'deg)');
+      rotation = deg;
     };
 
     // Initialization

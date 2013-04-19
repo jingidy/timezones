@@ -25,7 +25,8 @@
   text-align: center;
 
   transform-origin: bottom;
-  transform: rotate(-97deg);
+
+  z-index: 1;
 }
 
 .Clock .Number {
@@ -36,6 +37,7 @@
   bottom: 50%;
 
   transform-origin: bottom;
+  z-index: 2;
 }
 
 .Clock .NumberText {
