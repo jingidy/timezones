@@ -51,6 +51,8 @@ var Clock = (function () {
     updateNightShadowRotation();
     el.append(night);
 
+    el.append(timezonePicker.el());
+
     return this;
   }
 

@@ -5,7 +5,11 @@ var TimezonePicker = (function () {
     // Private
     var el = null;
     var utcOffset = 0;
-    var timezone = new Timezone();
+    var timezone = new Timezone(timezoneLoaded);
+
+    function timezoneLoaded () {
+      fixme('Implement timezoneLoaded');
+    }
 
     // Public
     this.el = function () { return el; };
@@ -19,7 +23,8 @@ var TimezonePicker = (function () {
       fixme('Implement setTimzeoneByName');
     };
 
-    fixme('Implement TimzeonePicker Constructor')
+    el = $('<input type="text">').addClass('TimezonePicker');
+    fixme('Show loading icon until timezone finishes loading')
     return this;
   }
 

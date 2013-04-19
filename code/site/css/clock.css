@@ -8,7 +8,6 @@
   box-sizing: border-box;
 
   overflow: hidden;
-  user-select: none;
 }
 
 .Clock .Night {
@@ -26,6 +25,8 @@
 
   transform-origin: bottom;
 
+  user-select: none;
+
   z-index: 1;
 }
 
@@ -37,6 +38,9 @@
   bottom: 50%;
 
   transform-origin: bottom;
+
+  user-select: none;
+
   z-index: 2;
 }
 
@@ -49,4 +53,15 @@
   font-size: 20px;
   font-weight: bold;
   color: black;
+}
+
+.Clock .TimezonePicker {
+  position: absolute;
+  left: 50%;
+  margin-left: -100px;
+  width: 200px;
+  bottom: 20%;
+
+  z-index: 3;
+  user-select: default;
 }
