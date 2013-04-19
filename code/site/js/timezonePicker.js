@@ -5,6 +5,7 @@ var TimezonePicker = (function () {
     // Private
     var el = null;
     var utcOffset = 0;
+    var timezone = new Timezone();
 
     // Public
     this.el = function () { return el; };
