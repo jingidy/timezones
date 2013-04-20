@@ -9,6 +9,7 @@ var Timezone = (function () {
     var ready = false;
     var str2utcOffset = {};
     var utcOffset2str = {};
+    var autocompleteStrings = null;
 
     function notReady () { err('Timezone data not yet loaded'); }
 
@@ -17,11 +18,17 @@ var Timezone = (function () {
 
     this.getAutocompleteStrings = function () {
       if (!ready) return notReady();
-      return Object.keys(str2utcOffset);
+      if (!autocompleteStrings)
+        autocompleteStrings = Object.keys(str2utcOffset);
+      return autocompleteStrings;
     }
-    this.utcOffsetForString = function (str) {
+    this.utcOffsetForName = function (name) {
       if (!ready) return notReady();
-      fixme('implement utcOffsetForString');
+      return str2utcOffset[name];
+    }
+    this.nameForUTCOffset = function (offset) {
+      if (!ready) return notReady();
+      return utcOffset2str[offset.toString()];
     }
 
     $.getJSON('js/timezones.json', function (data) {
@@ -30,7 +37,7 @@ var Timezone = (function () {
         var name = zone.name;
         var offset = parseFloat(zone.utcOffset);
 
-        var fullName = name + ' (' + code + ')';
+        var fullName = code + ' - ' + name;
         str2utcOffset[fullName] = offset;
         utcOffset2str[offset.toString()] = fullName;
       });

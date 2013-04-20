@@ -1,6 +1,6 @@
 var TimezonePicker = (function () {
 
-  function TimezonePicker () {
+  function TimezonePicker (timezoneChangedCb) {
 
     // Private
     var el = null;
@@ -8,7 +8,18 @@ var TimezonePicker = (function () {
     var timezone = new Timezone(timezoneLoaded);
 
     function timezoneLoaded () {
-      fixme('Implement timezoneLoaded');
+      $('.TimezonePicker').typeahead({
+        source: timezone.getAutocompleteStrings,
+        updater: timezoneDidChange
+      });
+      fixme('Remove loading indicator');
+    }
+
+    function timezoneDidChange (name) {
+      utcOffset = timezone.utcOffsetForName(name);
+      if (timezoneChangedCb)
+        timezoneChangedCb();
+      return name;
     }
 
     // Public
@@ -24,6 +35,7 @@ var TimezonePicker = (function () {
     };
 
     el = $('<input type="text">').addClass('TimezonePicker');
+    el.attr('autocomplete', 'off');
     fixme('Show loading icon until timezone finishes loading')
     return this;
   }

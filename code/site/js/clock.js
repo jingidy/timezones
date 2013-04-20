@@ -5,7 +5,7 @@ var Clock = (function () {
     var el = null;
     var numbers = [];
     var night = null;
-    var timezonePicker = new TimezonePicker ();
+    var timezonePicker = new TimezonePicker (timezoneDidChange);
 
     function rotateNumbersWithOffset (offsetDeg) {
       var numbersCount = numbers.length;
@@ -16,6 +16,10 @@ var Clock = (function () {
     function updateNightShadowRotation () {
       var noonRotation = numbers[12].getRotation();
       night.css('transform', 'rotate(' + (noonRotation + 83) + 'deg)');
+    }
+
+    function timezoneDidChange () {
+      fixme('implement timezoneDidChange');
     }
 
     // Public
@@ -36,10 +40,13 @@ var Clock = (function () {
       'height': diameter + 'px'
     });
 
+    var clockFace = $('<div>').addClass('ClockFace');
+    el.append(clockFace);
+
     for (var i = 0; i < 24; i++) {
       var val = i > 12 ? i - 12 : i;
       var number = new Number (val);
-      el.append(number.el());
+      clockFace.append(number.el());
       numbers[i] = number;
     }
     rotateNumbersWithOffset(0);
@@ -49,7 +56,7 @@ var Clock = (function () {
     night.css('line-height', diameter - 40 + 'px');
     night.append('PM');
     updateNightShadowRotation();
-    el.append(night);
+    clockFace.append(night);
 
     el.append(timezonePicker.el());
 
